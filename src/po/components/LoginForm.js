@@ -7,7 +7,6 @@ export class LoginForm {
     static async login(username, password) {
       await $(LoginForm.usernameInput).setValue(username);
       await $(LoginForm.passwordInput).setValue(password);
-      await $(LoginForm.loginButton).click();
     }
   
     static async clearUsernameInput() {
