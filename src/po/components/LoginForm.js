@@ -1,33 +1,31 @@
 export class LoginForm {
-    static usernameInput = '#user-name';
-    static passwordInput = '#password';
-    static loginButton = '#login-button';
-    static errorMessage = '.error-message-container';
+    usernameInput = '#user-name';
+    passwordInput = '#password';
+    loginButton = '#login-button';
+    errorMessage = '.error-message-container';
   
-    static async login(username, password) {
-      await $(LoginForm.usernameInput).setValue(username);
-      await $(LoginForm.passwordInput).setValue(password);
+    async login(username, password) {
+      await $(this.usernameInput).setValue(username);
+      await $(this.passwordInput).setValue(password);
     }
   
-    static async clearUsernameInput() {
-      const usernameInput = $(LoginForm.usernameInput);
-      // Useing this approch of clering fields to avoid inconsitency bewteen browsers
-      await usernameInput.doubleClick(); // Select all text in the field
-      await browser.keys('Delete'); // Delete selected text
+    async clearUsernameInput() {
+      const usernameInput = $(this.usernameInput);
+      await usernameInput.doubleClick();
+      await browser.keys('Delete');
     }
   
-    static async clearPasswordInput() {
-      const passwordInput = $(LoginForm.passwordInput);
-      // Useing this approch of clering fields to avoid inconsitency bewteen browsers
-      await passwordInput.doubleClick(); // Select all text in the field
-      await browser.keys('Delete'); // Delete selected text
+    async clearPasswordInput() {
+      const passwordInput = $(this.passwordInput);
+      await passwordInput.doubleClick();
+      await browser.keys('Delete');
     }
   
-    static async clickLoginButton() {
-      await $(LoginForm.loginButton).click();
+    async clickLoginButton() {
+      await $(this.loginButton).click();
     }
   
-    static async getErrorMessage() {
-      return await $(LoginForm.errorMessage).getText();
+    async getErrorMessage() {
+      return await $(this.errorMessage).getText();
     }
-  }
+}

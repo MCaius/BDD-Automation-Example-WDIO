@@ -1,7 +1,7 @@
 export class DashboardHeader {
-    static dashboardTitle = '.header_label .app_logo';
+    dashboardTitle = '.header_label .app_logo';
   
-    static async getDashboardTitle() {
-      return await $(DashboardHeader.dashboardTitle).getText();
+    async getDashboardTitle() {
+      return await $(this.dashboardTitle).getText();
     }
-  }
+}
