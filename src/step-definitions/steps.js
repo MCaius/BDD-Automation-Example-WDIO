@@ -10,8 +10,12 @@ Given('I am on the login page', async () => {
   });
   
 When('I enter {string} and {string}', async (username, password) => {
-    await loginPage.form.login(username, password);
-  });
+    const actualPassword = password === '{TEST_PWD}' 
+        ? process.env.TEST_PASSWORD
+        : password;
+   // console.log('Using password:', actualPassword); // Print passowrds from the env file during test
+    await loginPage.form.login(username, actualPassword);
+});
   
 When('I clear the fields:', async (dataTable) => {
     const fieldsToClear = dataTable.raw().flat();
@@ -33,9 +37,11 @@ Then('I should see the error message {string}', async (errorMessage) => {
   });
 
 Then('I should see the dashboard title {string}', async (expectedTitle) => {
-    // Check if we are on the dashboard page
-    if (await browser.getUrl() === inventoryPage.url) { 
-        const actualTitle = await inventoryPage.header.getDashboardTitle();
-        expect(actualTitle).toContain(expectedTitle);
-    }
+    // First, verify we're on the correct page
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toContain(inventoryPage.path);
+    
+    // Then check the title
+    const actualTitle = await inventoryPage.header.getDashboardTitle();
+    expect(actualTitle).toContain(expectedTitle);
 });
