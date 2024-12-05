@@ -27,20 +27,6 @@ When('I click the "Login" button for login', async () => {
     await loginPage.form.clickLoginButton();
 });
   
-// For UTC3 ( Successful Login )
-When('I am logged in and on the dashboard', async () => {
-    // Wait for the page to transition
-    if (await browser.getUrl() === loginPage.url) {
-        await browser.waitUntil(
-            async () => (await browser.getUrl()) === inventoryPage.url,
-            {
-                timeout: 50000,
-                timeoutMsg: 'Expected URL did not change to inventory page within 5 seconds'
-            }
-        );
-    }
-});
-
 Then('I should see the error message {string}', async (errorMessage) => {
     const actualMessage = await loginPage.form.getErrorMessage();
     expect(actualMessage).toContain(errorMessage);
