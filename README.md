@@ -36,9 +36,9 @@ Assertions: Use from the selected framework;
 
 ## Valid passwords
 - Add the valid passowrds in the .env file
-- Check the .env.example for referance
-- .env.example contains the valid password for the test (not a security risk for this website)
+- Check the .env.example for reference
+- .env.example contains the valid passwords for the test (not a security risk for this website)
 
 ## Requirements
 - Node.js: 20.10.0
-- npm: v10.8.0
+- Npm: v10.8.0

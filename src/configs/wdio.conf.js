@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 export const config = {
     //
     // ====================
@@ -267,8 +269,20 @@ export const config = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {object}             context          Cucumber World object
      */
-    // afterStep: function (step, scenario, result, context) {
-    // },
+    afterStep: async function (scenario, result) {
+        if (!result.passed) {
+            const timestamp = new Date().toISOString().replace(/[^0-9]/g, '');
+            const filename = `${scenario.name || 'scenario'}-${timestamp}.png`;
+            const dirPath = './artifacts/screenshots/';
+
+            if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath, { recursive: true });
+            }
+
+            await browser.saveScreenshot(dirPath + filename);
+            console.log(`Screenshot saved: ${filename}`);
+        }
+    },
     /**
      *
      * Runs after a Cucumber Scenario.
