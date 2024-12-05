@@ -269,18 +269,28 @@ export const config = {
      * @param {number}             result.duration  duration of scenario in milliseconds
      * @param {object}             context          Cucumber World object
      */
-    afterStep: async function (scenario, result) {
-        if (!result.passed) {
-            const timestamp = new Date().toISOString().replace(/[^0-9]/g, '');
-            const filename = `${scenario.name || 'scenario'}-${timestamp}.png`;
-            const dirPath = './artifacts/screenshots/';
+    afterStep: async function (step, scenario, result) {
+        console.log('afterStep hook triggered');
+        console.log('Result status:', result);
+        
+        if (result.error) {
+            console.log('Error detected, attempting to save screenshot');
+            try {
+                const timestamp = new Date().toISOString().replace(/[^0-9]/g, '');
+                const scenarioName = scenario.pickle ? scenario.pickle.name : 'unknown_scenario';
+                const filename = `${scenarioName}-${timestamp}.png`;
+                const dirPath = './artifacts/screenshots/';
 
-            if (!fs.existsSync(dirPath)) {
-                fs.mkdirSync(dirPath, { recursive: true });
+                if (!fs.existsSync(dirPath)) {
+                    console.log('Creating directory:', dirPath);
+                    fs.mkdirSync(dirPath, { recursive: true });
+                }
+
+                await browser.saveScreenshot(dirPath + filename);
+                console.log(`Screenshot saved successfully: ${filename}`);
+            } catch (error) {
+                console.error('Error saving screenshot:', error);
             }
-
-            await browser.saveScreenshot(dirPath + filename);
-            console.log(`Screenshot saved: ${filename}`);
         }
     },
     /**
