@@ -276,8 +276,9 @@ export const config = {
         if (result.error) {
             console.log('Error detected, attempting to save screenshot');
             try {
-                const timestamp = new Date().toISOString().replace(/[^0-9]/g, '');
-                const scenarioName = scenario.pickle ? scenario.pickle.name : 'unknown_scenario';
+                const now = new Date();
+                const timestamp = now.toISOString().replace('T', '--').split('.')[0];
+                const scenarioName = scenario.name || 'unknown_scenario';
                 const filename = `${scenarioName}-${timestamp}.png`;
                 const dirPath = './artifacts/screenshots/';
 

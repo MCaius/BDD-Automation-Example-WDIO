@@ -10,5 +10,5 @@ Scenario: Attempt login with only Username
 
   Examples:
     | username          | password          |
-    | any_userUC2       | any_passwordUC2   |
-    | MyUserUC2         | MyPasswordUC2     |
+    | standard_user     | any_passwordUC2   |
+    | non_validUsr      | MyPasswordUC2     |
